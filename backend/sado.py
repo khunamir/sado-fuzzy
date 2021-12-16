@@ -1,6 +1,6 @@
 from simpful import *
 
-class Sado:
+class SadoFuzzy:
 
     def __init__(self):
         self.calorie = 0
