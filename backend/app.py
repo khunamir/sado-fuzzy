@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
-from sado import Sado
+from flask_cors import CORS
+from sado import SadoFuzzy
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/")
 def hello_world():
@@ -9,7 +12,7 @@ def hello_world():
 
 @app.route("/start", methods=["POST"])
 def run():
-    sado_fuzzy = Sado()
+    sado_fuzzy = SadoFuzzy()
     if request.method == 'POST':
         user_data = request.json
         calorie = sado_fuzzy.start(
@@ -20,4 +23,5 @@ def run():
             user_data['intensity']
         )
         print(calorie)
-        return calorie
+        return jsonify(calorie=round(calorie['Calorie'], 2))
+        
